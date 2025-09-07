@@ -1,0 +1,17 @@
+name: vaultwarden
+services:
+    server:
+        container_name: vaultwarden
+        volumes:
+            - ./vw-data:/data/
+        image: 'vaultwarden/server:1.34.1-alpine'
+        restart: unless-stopped
+        env_file: .env
+        networks:
+          - proxy_network
+        environment:
+          - ADMIN_TOKEN=${ADMIN_TOKEN}
+
+networks:
+  proxy_network:
+    external: true
