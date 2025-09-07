@@ -1,0 +1,26 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:10.10.7
+    container_name: jellyfin
+    environment:
+    - PUID=0
+    - PGID=0
+    - TZ=Europe/Madrid
+    volumes:
+      - ./library:/config
+      - /opt/plex/tv:/data/tvshows
+      - /opt/plex/movies:/data/movies
+      - ./music:/data/music
+    devices:
+      - /dev/video19:/dev/video19
+    ports:
+      - ${HTTP_UI_PORT}:8096
+    restart: unless-stopped
+    networks:
+      - proxy_network
+    env_file: .env
+
+
+networks:
+  proxy_network:
+    external: true
