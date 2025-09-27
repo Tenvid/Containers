@@ -8,9 +8,9 @@ services:
     - TZ=Europe/Madrid
     volumes:
       - ./library:/config
-      - /opt/plex/tv:/data/tvshows
-      - /opt/plex/movies:/data/movies
-      - ./music:/data/music
+      - /home/david/Media/series:/data/tvshows
+      - /home/david/Media/movies:/data/movies
+      - /home/david/Media/music:/data/music
     devices:
       - /dev/video19:/dev/video19
     ports:
