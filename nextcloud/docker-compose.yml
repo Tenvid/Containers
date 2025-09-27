@@ -5,14 +5,36 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Europe/Madrid
     volumes:
       - ./config:/config
       - ./data:/data
+      - /home/david/Media/movies:/películas
+      - /home/david/Media/series:/series
     restart: unless-stopped
     networks:
       - proxy_network
+      - default
 
+  db:
+    image: postgres:17.6
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    networks:
+      - default
+    env_file: .env
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - default
 networks:
   proxy_network:
     external: true
